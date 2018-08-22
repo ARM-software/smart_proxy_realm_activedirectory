@@ -1,0 +1,17 @@
+---
+# ActiveDirectory settings and authentication
+:realm_name: <%= @realm['name'] %>
+:realm_basedn: <%= @realm['basedn'] %>
+:realm_server: <%= @realm['server'] %>
+:realm_principal: <%= @realm['principal'] %>
+:realm_password: <%= @realm['password'] %>
+
+# Configure where in the AD tree you want hosts to be created
+<% if @realm['container'].is_a?(Array) -%>
+:container:
+<% @realm['container'].each do |d| -%>
+  <%= d['domain'] %>: <%= d['container'] %>
+<% end -%>
+<% else -%>
+:container: <%= @realm['container'] %>
+<% end -%>

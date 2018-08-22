@@ -1,0 +1,15 @@
+---
+# Example Hiera data structure
+realm:
+  name: EXAMPLE.COM
+  basedn: dc=example,dc=com
+  server: kdc.example.com
+  principal: svc@EXAMPLE.COM
+  password: secret
+  container:
+    - domain: ap.example.com
+      container: ou=computers,dc=ap,dc=example,dc=com
+    - domain: eu.example.com
+      container: ou=computers,dc=eu,dc=example,dc=com
+    - domain: na.example.com
+      container: ou=computers,dc=na,dc=example,dc=com

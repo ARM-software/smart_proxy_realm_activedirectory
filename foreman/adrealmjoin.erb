@@ -1,0 +1,23 @@
+<%#
+  kind: snippet
+  name: adrealmjoin
+  model: ProvisioningTemplate
+  snippet: true
+%>
+<%#
+# adrealmjoin snippet
+# This snippet uses adcli and the one time password to export a host keytab during provisioning.
+#
+# host_params:
+# * domain_controller: hostname of Active Directory domain controller
+#
+%>
+<% if @host.operatingsystem.family == "Debian" -%>
+/usr/bin/apt-get -y install libsasl2-modules-gssapi-mit adcli
+<% elsif @host.operatingsystem.family == "Redhat" -%>
+/usr/bin/yum -y install cyrus-sasl-gssapi adcli
+<% end -%>
+
+/usr/sbin/adcli join --show-details --verbose --service-name=host --host-fqdn=<%= @host %> --host-keytab=/etc/krb5.keytab --login-type=computer --one-time-password=<%= @host.otp %> --domain-controller=<%= host_param("domain_controller") %> <%= @host.realm %>
+/bin/chown 0:0 /etc/krb5.keytab
+/bin/chmod 600 /etc/krb5.keytab

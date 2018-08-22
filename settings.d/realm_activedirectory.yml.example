@@ -1,0 +1,31 @@
+---
+# Active Directory settings and authentication
+:realm_name: 'EXAMPLE.COM'
+:realm_basedn: 'dc=example,dc=com'
+:realm_server: 'kdc.example.com'
+
+# The user principal must have access to create, modify,
+# delete and set passwords on objects defined :container:
+:realm_principal: 'svc@EXAMPLE.COM'
+:realm_password: 'secret'
+
+# Configure where in the AD tree you want hosts to be created
+:container: 'ou=computers,dc=example,dc=com'
+#
+# Alternatively you can create a hash of domains & containers
+# and the FQDN of the computer will be matched to the domain
+#:container:
+#  ap.example.com: ou=computers,dc=ap,dc=example,dc=com
+#  eu.example.com: ou=computers,dc=eu,dc=example,dc=com
+#  na.example.com: ou=computers,dc=na,dc=example,dc=com
+
+# How to generate the sAMAccountName attribute
+# The default behaviour can potentially create non-unique
+# values in some environments where hostnames are generally
+# longer than 15 characters.
+#
+# 'legacy'     - truncate hostname at 15 characters [default]
+# 'md5-digest' - md5 digest of fully qualified hostname
+# 'passive'    - let Active Directory set a semi-random value
+#
+#:samaccountname: 'legacy'
